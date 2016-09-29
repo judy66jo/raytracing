@@ -4,7 +4,7 @@ all: $(EXEC)
 
 CC ?= gcc
 CFLAGS = \
-	-std=gnu99 -Wall -O0 -g
+	-std=gnu99 -Wall -O0 -g 
 LDFLAGS = \
 	-lm
 
@@ -20,11 +20,11 @@ OBJS := \
 	main.o
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -fopenmp -o $@ $<
 
 
 $(EXEC): $(OBJS)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -fopenmp -o $@ $^ $(LDFLAGS)
 
 main.o: use-models.h
 use-models.h: models.inc Makefile
@@ -44,4 +44,4 @@ check: $(EXEC)
 
 clean:
 	$(RM) $(EXEC) $(OBJS) use-models.h \
-		out.ppm gmon.out
+		out.ppm gmon.out out.png
